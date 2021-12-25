@@ -1,0 +1,61 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:pmu_tileset_tool.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="310" d:DesignHeight="280"
+        x:Class="pmu_tileset_tool.Views.MainWindow"
+        Icon="/Assets/pmu-modding.ico"
+        Title="PMU tileset tool"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        CanResize="False"
+        Width="310" Height="280">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="black"
+                    TintOpacity="1"
+                    MaterialOpacity=".65"/>
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        <StackPanel VerticalAlignment="Top">
+            <WrapPanel>
+                <Label>Tile:</Label>
+                <Label Content="{Binding TileId}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <Label>Tile count:</Label>
+                <Label Content="{Binding Tileset.TileCount}"/>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Bottom" Margin="25">
+            <Image Width="160" Height="160" Source="{Binding Tile}" Margin="0 0 0 15"/>
+            <WrapPanel HorizontalAlignment="Center">
+                <Button Classes="TileSelect" Command="{Binding LoadTileset}" IsEnabled="True">
+                    <PathIcon Data="{StaticResource OpenRegular}"/>
+                </Button>
+                <Button Classes="TileSelect" Command="{Binding PreviousTile}">
+                    <PathIcon Data="{StaticResource ArrowLeftRegular}"/>
+                </Button>
+                <Button Classes="TileSelect" Command="{Binding NextTile}">
+                    <PathIcon Data="{StaticResource ArrowRightRegular}"/>
+                </Button>
+            </WrapPanel>
+        </StackPanel>
+    </Panel>
+
+    <Window.Styles>
+        <Style Selector="Button.TileSelect">
+            <Setter Property="Padding" Value="15 5"/>
+            <Setter Property="IsEnabled" Value="{Binding !!Tileset}"/>
+        </Style>
+    </Window.Styles>
+</Window>
