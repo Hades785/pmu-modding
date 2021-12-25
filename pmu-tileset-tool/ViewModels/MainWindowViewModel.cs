@@ -54,7 +54,7 @@ namespace pmu_tileset_tool.ViewModels
         {
             if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime app) return;
 
-            var dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog { Filters = { new FileDialogFilter { Extensions = { "tile" }, Name = "PMU Tileset Files" } }};
             var filePath = (await dialog.ShowAsync(app.MainWindow))?[0];
             if (filePath == null) return;
 
