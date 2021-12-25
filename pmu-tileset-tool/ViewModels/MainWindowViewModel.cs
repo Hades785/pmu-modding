@@ -61,5 +61,18 @@ namespace pmu_tileset_tool.ViewModels
             await using var file = File.Open(filePath, FileMode.Open);
             Tileset = new Tileset(file);
         }
+
+        public async void ReplaceTile()
+        {
+            if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime app) return;
+
+            var dialog = new OpenFileDialog { Filters = { new FileDialogFilter { Extensions = { "png" }, Name = "PNG image files" } }};
+            var filePath = (await dialog.ShowAsync(app.MainWindow))?[0];
+            if (filePath == null) return;
+
+            var tile = await File.ReadAllBytesAsync(filePath);
+            Tileset!.TileData[TileId] = tile;
+            RefreshTile();
+        }
     }
 }

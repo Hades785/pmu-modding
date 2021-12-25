@@ -45,6 +45,9 @@
                 <Button Classes="TileSelect" Command="{Binding PreviousTile}">
                     <PathIcon Data="{StaticResource ArrowLeftRegular}"/>
                 </Button>
+                <Button Classes="TileSelect" Command="{Binding ReplaceTile}">
+                    <PathIcon Data="{StaticResource EditRegular}"/>
+                </Button>
                 <Button Classes="TileSelect" Command="{Binding NextTile}">
                     <PathIcon Data="{StaticResource ArrowRightRegular}"/>
                 </Button>
