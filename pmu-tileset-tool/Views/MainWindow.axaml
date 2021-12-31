@@ -41,21 +41,39 @@
             <WrapPanel HorizontalAlignment="Center">
                 <Button Classes="TileSelect" Command="{Binding LoadTileset}" IsEnabled="True">
                     <PathIcon Data="{StaticResource OpenRegular}"/>
+
+                    <ToolTip.Placement>Pointer</ToolTip.Placement>
+                    <ToolTip.Tip>Open tileset file</ToolTip.Tip>
                 </Button>
                 <Button Classes="TileSelect" Command="{Binding PreviousTile}">
                     <PathIcon Data="{StaticResource ArrowLeftRegular}"/>
+
+                    <ToolTip.Placement>Pointer</ToolTip.Placement>
+                    <ToolTip.Tip>Previous tile (wraps around if needed)</ToolTip.Tip>
                 </Button>
                 <Button Classes="TileSelect" Command="{Binding SaveTile}">
                     <PathIcon Data="{StaticResource ArrowDownloadRegular}"/>
+
+                    <ToolTip.Placement>Pointer</ToolTip.Placement>
+                    <ToolTip.Tip>Save selected tile</ToolTip.Tip>
                 </Button>
                 <Button Classes="TileSelect" Command="{Binding ReplaceTile}">
                     <PathIcon Data="{StaticResource EditRegular}"/>
+
+                    <ToolTip.Placement>Pointer</ToolTip.Placement>
+                    <ToolTip.Tip>Replace selected tile</ToolTip.Tip>
                 </Button>
                 <Button Classes="TileSelect" Command="{Binding NextTile}">
                     <PathIcon Data="{StaticResource ArrowRightRegular}"/>
+
+                    <ToolTip.Placement>Pointer</ToolTip.Placement>
+                    <ToolTip.Tip>Next tile (wraps around if needed)</ToolTip.Tip>
                 </Button>
                 <Button Classes="TileSelect" Command="{Binding SaveTileset}">
                     <PathIcon Data="{StaticResource SaveAsRegular}"/>
+
+                    <ToolTip.Placement>Pointer</ToolTip.Placement>
+                    <ToolTip.Tip>Save current tileset with edits</ToolTip.Tip>
                 </Button>
             </WrapPanel>
         </StackPanel>
