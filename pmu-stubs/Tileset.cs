@@ -1,7 +1,8 @@
-﻿// Derived of https://github.com/PMUniverse/PMU-Client/blob/5f369cfbe90c2b7d1251bbed364407a6900e0ab5/Client/Graphics/Tileset.cs (Copyright (c) 2014 PMU Staff)
+// Derived of https://github.com/PMUniverse/PMU-Client/blob/5f369cfbe90c2b7d1251bbed364407a6900e0ab5/Client/Graphics/Tileset.cs (Copyright (c) 2014 PMU Staff)
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace pmu_stubs
 {
@@ -39,6 +40,36 @@ namespace pmu_stubs
                 data.Seek(tileDataOffsets[i], SeekOrigin.Begin);
                 TileData[i] = new byte[tileDataSizes[i]];
                 data.Read(TileData[i]);
+            }
+        }
+
+        public void WriteToStream(Stream stream)
+        {
+            using var writer = new BinaryWriter(stream);
+
+            // Write tileset bounds.
+            writer.Write(_pxWidth);
+            writer.Write(_pxHeight);
+
+            // Build meta table data.
+            var tileDataOffsets = new List<long>(TileCount) { 0L };
+            var tileDataSizes = TileData.Select(pair => pair.Value.Length).ToList();
+            for (var i = 1; i < TileCount; i++)
+            {
+                tileDataOffsets.Add(tileDataOffsets[i-1] + tileDataSizes[i-1]);
+            }
+
+            // Write meta table.
+            for (var i = 0; i < TileCount; i++)
+            {
+                writer.Write(tileDataOffsets[i]);
+                writer.Write(tileDataSizes[i]);
+            }
+
+            // Write all tile data.
+            for (var i = 0; i < TileCount; i++)
+            {
+                writer.Write(TileData[i]);
             }
         }
     }

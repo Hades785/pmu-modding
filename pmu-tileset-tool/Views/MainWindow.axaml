@@ -51,6 +51,9 @@
                 <Button Classes="TileSelect" Command="{Binding NextTile}">
                     <PathIcon Data="{StaticResource ArrowRightRegular}"/>
                 </Button>
+                <Button Classes="TileSelect" Command="{Binding SaveTileset}">
+                    <PathIcon Data="{StaticResource SaveAsRegular}"/>
+                </Button>
             </WrapPanel>
         </StackPanel>
     </Panel>

@@ -1,4 +1,5 @@
-﻿using System.IO;
+using System;
+using System.IO;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -11,7 +12,6 @@ namespace pmu_tileset_tool.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-
         private Bitmap? _tile;
         public Bitmap? Tile
         {
@@ -30,7 +30,7 @@ namespace pmu_tileset_tool.ViewModels
             }
         }
 
-        private int _currentTile = 0;
+        private int _currentTile;
         public int TileId
         {
             get => _currentTile;
@@ -54,7 +54,7 @@ namespace pmu_tileset_tool.ViewModels
         {
             if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime app) return;
 
-            var dialog = new OpenFileDialog { Filters = { new FileDialogFilter { Extensions = { "tile" }, Name = "PMU Tileset Files" } }};
+            var dialog = new OpenFileDialog { Filters = { new FileDialogFilter { Extensions = { "tile" }, Name = "PMU Tileset Files" } } };
             var filePath = (await dialog.ShowAsync(app.MainWindow))?[0];
             if (filePath == null) return;
 
@@ -66,13 +66,34 @@ namespace pmu_tileset_tool.ViewModels
         {
             if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime app) return;
 
-            var dialog = new OpenFileDialog { Filters = { new FileDialogFilter { Extensions = { "png" }, Name = "PNG image files" } }};
+            var dialog = new OpenFileDialog { Filters = { new FileDialogFilter { Extensions = { "png" }, Name = "PNG image files" } } };
             var filePath = (await dialog.ShowAsync(app.MainWindow))?[0];
             if (filePath == null) return;
 
             var tile = await File.ReadAllBytesAsync(filePath);
             Tileset!.TileData[TileId] = tile;
             RefreshTile();
+        }
+
+        public async void SaveTileset()
+        {
+            if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime app) return;
+
+            var dialog = new SaveFileDialog { Filters = { new FileDialogFilter { Extensions = { "tile" }, Name = "PMU Tileset files" } } };
+            var filePath = (await dialog.ShowAsync(app.MainWindow));
+            if (filePath == null) return;
+
+            if (File.Exists(filePath))
+                File.Move(
+                    filePath,
+                    Path.Combine(
+                        Path.GetDirectoryName(filePath)!,
+                        $"BACKUP_{DateTime.Now:yyyy'-'MM'-'dd'_'HH'-'mm'-'ss} {Path.GetFileName(filePath)}"
+                    )
+                );
+
+            await using var file = File.Open(filePath, FileMode.Create);
+            Tileset!.WriteToStream(file);
         }
     }
 }
