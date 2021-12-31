@@ -3,14 +3,14 @@
         xmlns:vm="using:pmu_tileset_tool.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="310" d:DesignHeight="280"
+        mc:Ignorable="d" d:DesignWidth="370" d:DesignHeight="280"
         x:Class="pmu_tileset_tool.Views.MainWindow"
         Icon="/Assets/pmu-modding.ico"
         Title="PMU tileset tool"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
         CanResize="False"
-        Width="310" Height="280">
+        Width="370" Height="280">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -44,6 +44,9 @@
                 </Button>
                 <Button Classes="TileSelect" Command="{Binding PreviousTile}">
                     <PathIcon Data="{StaticResource ArrowLeftRegular}"/>
+                </Button>
+                <Button Classes="TileSelect" Command="{Binding SaveTile}">
+                    <PathIcon Data="{StaticResource ArrowDownloadRegular}"/>
                 </Button>
                 <Button Classes="TileSelect" Command="{Binding ReplaceTile}">
                     <PathIcon Data="{StaticResource EditRegular}"/>

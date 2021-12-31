@@ -62,6 +62,17 @@ namespace pmu_tileset_tool.ViewModels
             Tileset = new Tileset(file);
         }
 
+        public async void SaveTile()
+        {
+            if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime app) return;
+
+            var dialog = new SaveFileDialog { Filters = { new FileDialogFilter { Extensions = { "png" }, Name = "PNG image files" } } };
+            var filePath = await dialog.ShowAsync(app.MainWindow);
+            if (filePath == null) return;
+
+            await File.WriteAllBytesAsync(filePath, Tileset!.TileData[TileId]);
+        }
+
         public async void ReplaceTile()
         {
             if (Application.Current.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime app) return;
